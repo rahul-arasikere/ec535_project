@@ -49,35 +49,52 @@
 ****************************************************************************/
 
 #include <QtWidgets>
-#include <QFile>
+#include <QUdpSocket>
 
 #include "arrowpad.h"
 #include "mainwindow.h"
 
-MainWindow::MainWindow(){
+MainWindow::MainWindow()
+{
     arrowPad = new ArrowPad;
-
+    socket = new QUdpSocket(this);
+    socket->bind(QHostAddress::Any, 14123);
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     setCentralWidget(arrowPad);
 
-    connect(arrowPad->forwardButton, SIGNAL(clicked()), this, SLOT(direction()));
-    connect(arrowPad->backwardButton, SIGNAL(clicked()), this, SLOT(direction()));
-    connect(arrowPad->leftButton, SIGNAL(clicked()), this, SLOT(direction()));
-    connect(arrowPad->rightButton, SIGNAL(clicked()), this, SLOT(direction()));
+    connect(arrowPad->forwardButton, SIGNAL(clicked()), this, SLOT(moveForward()));
+    connect(arrowPad->backwardButton, SIGNAL(clicked()), this, SLOT(moveBack()));
+    connect(arrowPad->leftButton, SIGNAL(clicked()), this, SLOT(moveLeft()));
+    connect(arrowPad->rightButton, SIGNAL(clicked()), this, SLOT(moveRight()));
 
     exitAct = new QAction(tr("E&xit"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 }
 
-void MainWindow::direction(){
-    QPushButton *button = (QPushButton *)sender();
+void MainWindow::moveForward() {}
+void MainWindow::moveBack() {}
+void MainWindow::moveRight() {}
+void MainWindow::moveLeft() {}
 
-    QFile file("directions.txt");
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+void MainWindow::readyRead()
+{
+    // when data comes in
+    QByteArray buffer;
+    buffer.resize(socket->pendingDatagramSize());
 
-    QTextStream out(&file);
-    out << button->text() << "\n";
+    QHostAddress sender;
+    quint16 senderPort;
 
-    file.close();
+    // qint64 QUdpSocket::readDatagram(char * data, qint64 maxSize,
+    //                 QHostAddress * address = 0, quint16 * port = 0)
+    // Receives a datagram no larger than maxSize bytes and stores it in data.
+    // The sender's host address and port is stored in *address and *port
+    // (unless the pointers are 0).
+
+    socket->readDatagram(buffer.data(), buffer.size(), &sender, &senderPort);
+
+    qDebug() << "Message from: " << sender.toString();
+    qDebug() << "Message port: " << senderPort;
+    qDebug() << "Message: " << buffer;
 }

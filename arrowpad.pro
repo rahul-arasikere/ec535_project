@@ -14,5 +14,12 @@ INSTALLS += target
 
 QT += widgets
 QT += core
+QT += network
+QT += opengl
+
+CONFIG   += console
+CONFIG   -= app_bundle
+
+TEMPLATE = app
 
 simulator: warning(This example might not fully work on Simulator platform)

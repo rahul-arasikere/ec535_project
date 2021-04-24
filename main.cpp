@@ -52,8 +52,9 @@
 
 #include "mainwindow.h"
 
-int main(int argc, char *argv[]){
-    Q_INIT_RESOURCE(arrowpad);
+int main(int argc, char *argv[])
+{
+    // Q_INIT_RESOURCE(arrowpad);
 
     QApplication app(argc, argv);
 
@@ -61,5 +62,3 @@ int main(int argc, char *argv[]){
     mainWindow.show();
     return app.exec();
 }
-
-

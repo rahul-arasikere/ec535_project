@@ -52,6 +52,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QUdpSocket>
+
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -59,23 +61,25 @@ class QMenu;
 QT_END_NAMESPACE
 class ArrowPad;
 
-//! [0]
 class MainWindow : public QMainWindow
-//! [0] //! [1]
 {
     Q_OBJECT
-//! [1]
 
 public:
     MainWindow();
 
 private:
     ArrowPad *arrowPad;
+    QUdpSocket *socket;
     QMenu *fileMenu;
     QAction *exitAct;
 
 private slots:
-    void direction();
+    void moveForward();
+    void moveBack();
+    void moveLeft();
+    void moveRight();
+    void readyRead();
 };
 
 #endif

@@ -55,15 +55,15 @@
 ArrowPad::ArrowPad(QWidget *parent)
     : QWidget(parent)
 {
-//! [0]
+    //! [0]
     forwardButton = new QPushButton(tr("&Forward"));
-//! [0] //! [1]
+    //! [0] //! [1]
     backwardButton = new QPushButton(tr("&Backward"));
-//! [1] //! [2]
+    //! [1] //! [2]
     leftButton = new QPushButton(tr("&Left"));
-//! [2] //! [3]
+    //! [2] //! [3]
     rightButton = new QPushButton(tr("&Right"));
-//! [3]
+    //! [3]
 
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(forwardButton, 0, 1);
