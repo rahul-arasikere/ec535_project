@@ -58,24 +58,44 @@ MainWindow::MainWindow()
 {
     arrowPad = new ArrowPad;
     socket = new QUdpSocket(this);
-    socket->bind(QHostAddress::Any, 14123);
+    socket->connectToHost(QHostAddress("127.0.0.1"), 14123); // fix this
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     setCentralWidget(arrowPad);
 
-    connect(arrowPad->forwardButton, SIGNAL(clicked()), this, SLOT(moveForward()));
-    connect(arrowPad->backwardButton, SIGNAL(clicked()), this, SLOT(moveBack()));
-    connect(arrowPad->leftButton, SIGNAL(clicked()), this, SLOT(moveLeft()));
-    connect(arrowPad->rightButton, SIGNAL(clicked()), this, SLOT(moveRight()));
+    connect(arrowPad->forwardButton, SIGNAL(pressed()), this, SLOT(moveForward()));
+    connect(arrowPad->backwardButton, SIGNAL(pressed()), this, SLOT(moveBack()));
+    connect(arrowPad->leftButton, SIGNAL(pressed()), this, SLOT(moveLeft()));
+    connect(arrowPad->rightButton, SIGNAL(pressed()), this, SLOT(moveRight()));
+    connect(arrowPad->forwardButton, SIGNAL(released()), this, SLOT(moveStop()));
+    connect(arrowPad->backwardButton, SIGNAL(released()), this, SLOT(moveStop()));
+    connect(arrowPad->leftButton, SIGNAL(released()), this, SLOT(moveStop()));
+    connect(arrowPad->rightButton, SIGNAL(released()), this, SLOT(moveStop()));
 
     exitAct = new QAction(tr("E&xit"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 }
 
-void MainWindow::moveForward() {}
-void MainWindow::moveBack() {}
-void MainWindow::moveRight() {}
-void MainWindow::moveLeft() {}
+void MainWindow::moveForward()
+{
+    socket->write("F");
+}
+void MainWindow::moveBack()
+{
+    socket->write("B");
+}
+void MainWindow::moveRight()
+{
+    socket->write("R");
+}
+void MainWindow::moveLeft()
+{
+    socket->write("L");
+}
+void MainWindow::moveStop()
+{
+    socket->write("S");
+}
 
 void MainWindow::readyRead()
 {

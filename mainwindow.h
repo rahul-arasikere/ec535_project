@@ -79,6 +79,7 @@ private slots:
     void moveBack();
     void moveLeft();
     void moveRight();
+    void moveStop();
     void readyRead();
 };
 
