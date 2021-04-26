@@ -59,7 +59,7 @@ MainWindow::MainWindow()
 {
     arrowPad = new ArrowPad;
     socket = new QUdpSocket(this);
-    socket->connectToHost(QHostAddress("127.0.0.1"), 14123); // fix this
+    socket->connectToHost(QHostAddress("192.168.1.36"), 14123); // fix this
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     setCentralWidget(arrowPad);
 
