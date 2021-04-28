@@ -14,7 +14,7 @@ The final project submission for BU ENG EC535 by Asbel and Rahul.
 Clone git repo, the `arrowpad/` folder contains the Qt user application.
 Build it with `qmake && make`. Copy the application generated on to the BBB.
 
-`robot` contains the kernel module for controlling the robot and it's required `Makefile`. 
+`robot` contains the kernel module for controlling the robot and it's required `Makefile`.
 It needs to be built against `linux-4.19.82-ti-rt-r33` kernel, you can compile it with `make`, and copied over to the BBB.
 
 `udp server` is the user application that acts as the command server and can be built using `make`.
@@ -33,7 +33,7 @@ Connect both beaglebones to ethernet and ensure the ip addresses are correct in 
 ## Running the Software
 
 On the beaglebone connected to the robot run:
-`mknod /dev/robot c 61 0` followed by `insmod ./path/to/robot.ko`. 
+`mknod /dev/robot c 61 0` followed by `insmod ./path/to/robot.ko`.
 After which start the server with `./server`.
 
 On the beaglebone connected to the touch screen:
