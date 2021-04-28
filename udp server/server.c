@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <fcntl.h> // file descriptor open / close
 #include <netinet/in.h>
 
 #define PORT 14123
@@ -15,6 +16,7 @@
 int main()
 {
     int sockfd;
+    int pFile = open("/dev/robot", O_RDWR);
     char buffer[MAXLINE];
     char *hello = "Hello from server";
     struct sockaddr_in servaddr, cliaddr;
@@ -53,9 +55,7 @@ int main()
                      &len);
         buffer[n] = '\0';
         printf("Client : %s\n", buffer);
-        sendto(sockfd, (const char *)hello, strlen(hello),
-               MSG_CONFIRM, (const struct sockaddr *)&cliaddr,
-               len);
+        write(pFile, buffer, 2);
     }
 
     return 0;
