@@ -1,4 +1,3 @@
-// Server side implementation of UDP client-server model
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,9 +15,9 @@
 int main()
 {
     int sockfd;
-    int pFile = open("/dev/robot", O_RDWR);
-    char buffer[MAXLINE];
-    struct sockaddr_in servaddr, cliaddr;
+    int pFile = open("/dev/robot", O_RDWR); // open character device file
+    char buffer[MAXLINE];                   // BUFFER
+    struct sockaddr_in servaddr, cliaddr;   // adddress for the server and incoming client connection
 
     // Creating socket file descriptor
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
@@ -31,8 +30,8 @@ int main()
     memset(&cliaddr, 0, sizeof(cliaddr));
 
     // Filling server information
-    servaddr.sin_family = AF_INET; // IPv4
-    servaddr.sin_addr.s_addr = INADDR_ANY;
+    servaddr.sin_family = AF_INET;         // IPv4
+    servaddr.sin_addr.s_addr = INADDR_ANY; // BIND to all addresses
     servaddr.sin_port = htons(PORT);
 
     // Bind the socket with the server address
@@ -45,7 +44,7 @@ int main()
 
     int len, n;
 
-    len = sizeof(cliaddr); //len is value/resuslt
+    len = sizeof(cliaddr); //len is value
 
     while (1)
     {
@@ -53,8 +52,8 @@ int main()
                      MSG_WAITALL, (struct sockaddr *)&cliaddr,
                      &len);
         buffer[n] = '\0';
-        printf("Client : %s\n", buffer);
-        write(pFile, buffer, 2);
+        printf("Client : %s\n", buffer); // debugging
+        write(pFile, buffer, 2);         // write command into the module
     }
 
     return 0;
