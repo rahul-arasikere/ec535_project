@@ -14,7 +14,8 @@ The final project submission for BU ENG EC535 by Asbel and Rahul.
 Clone git repo, the `arrowpad/` folder contains the Qt user application.
 Build it with `qmake && make`. Copy the application generated on to the beaglebone.
 
-`robot` contains the kernel module for controlling the robot. It needs to be built against `linux-4.19.82-ti-rt-r33` kernel and copied over to the beaglebone.
+`robot` contains the kernel module for controlling the robot and it's required `Makefile`. 
+It needs to be built against `linux-4.19.82-ti-rt-r33` kernel, you can compile it with `make`, and copied over to the beaglebone.
 
 `udp server` is the user application that acts as the command server and can be built using `make`.
 
