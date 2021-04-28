@@ -47,10 +47,11 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+// Code Gotten From QT Arrowpad Demo
 
 #include <QtWidgets>
 #include <QUdpSocket>
-#include <QFile>
+//#include <QFile>
 
 #include "arrowpad.h"
 #include "mainwindow.h"
@@ -58,11 +59,13 @@
 MainWindow::MainWindow()
 {
     arrowPad = new ArrowPad;
+    /* Setup UDP Socket For Later Use */
     socket = new QUdpSocket(this);
     socket->connectToHost(QHostAddress("192.168.1.36"), 14123); // fix this
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     setCentralWidget(arrowPad);
 
+    /* Sets Up The Signals For Button Press And Release And Their Callback Functions */
     connect(arrowPad->forwardButton, SIGNAL(pressed()), this, SLOT(moveForward()));
     connect(arrowPad->backwardButton, SIGNAL(pressed()), this, SLOT(moveBack()));
     connect(arrowPad->leftButton, SIGNAL(pressed()), this, SLOT(moveLeft()));
@@ -79,6 +82,7 @@ MainWindow::MainWindow()
 
 void MainWindow::moveForward()
 {
+    /* Local Version: Writes The Correct Characters To The /dev/robot File */
     // QFile robot("/dev/robot");
     // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
     //     return;
@@ -88,10 +92,11 @@ void MainWindow::moveForward()
 
     // robot.close();
 
-    socket->write("F");
+    socket->write("F"); // Send UDP cmd message
 }
 void MainWindow::moveBack()
 {
+    /* Local Version: Writes The Correct Characters To The /dev/robot File */
     // QFile robot("/dev/robot");
     // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
     //     return;
@@ -101,10 +106,11 @@ void MainWindow::moveBack()
 
     // robot.close();
 
-    socket->write("B");
+    socket->write("B"); // Send UDP cmd message
 }
 void MainWindow::moveLeft()
 {
+    /* Local Version: Writes The Correct Characters To The /dev/robot File */
     // QFile robot("/dev/robot");
     // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
     //     return;
@@ -114,10 +120,11 @@ void MainWindow::moveLeft()
 
     // robot.close();
 
-    socket->write("L");
+    socket->write("L"); // Send UDP cmd message
 }
 void MainWindow::moveRight()
 {
+    /* Local Version: Writes The Correct Characters To The /dev/robot File */
     // QFile robot("/dev/robot");
     // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
     //     return;
@@ -127,10 +134,11 @@ void MainWindow::moveRight()
 
     // robot.close();
 
-    socket->write("R");
+    socket->write("R"); // Send UDP cmd message
 }
 void MainWindow::moveStop()
 {
+    /* Local Version: Writes The Correct Characters To The /dev/robot File */
     // QFile robot("/dev/robot");
     // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
     //     return;
@@ -140,7 +148,7 @@ void MainWindow::moveStop()
 
     // robot.close();
 
-    socket->write("S");
+    socket->write("S"); // Send UDP cmd message
 }
 
 void MainWindow::readyRead()

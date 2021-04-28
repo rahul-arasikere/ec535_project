@@ -47,6 +47,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+// Code Gotten From QT Arrowpad Demo
 
 #include <QtWidgets>
 
@@ -56,9 +57,9 @@ ArrowPad::ArrowPad(QWidget *parent)
     : QWidget(parent)
 {
     //! [0]
-    forwardButton = new QPushButton(tr("&Forward"));
+    forwardButton = new QPushButton(tr("&Forward"));    // Modified to correctly represent our setup
     //! [0] //! [1]
-    backwardButton = new QPushButton(tr("&Backward"));
+    backwardButton = new QPushButton(tr("&Backward"));  // Modified to correctly represent our setup
     //! [1] //! [2]
     leftButton = new QPushButton(tr("&Left"));
     //! [2] //! [3]

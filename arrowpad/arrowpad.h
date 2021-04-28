@@ -47,6 +47,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+// Code Gotten From QT Arrowpad Demo
 
 #ifndef ARROWPAD_H
 #define ARROWPAD_H
@@ -63,8 +64,8 @@ class ArrowPad : public QWidget
 
 public:
     ArrowPad(QWidget *parent = 0);
-    QPushButton *forwardButton;
-    QPushButton *backwardButton;
+    QPushButton *forwardButton;     // Modified to keep naming convention unified
+    QPushButton *backwardButton;    // Modified to keep naming convention unified
     QPushButton *leftButton;
     QPushButton *rightButton;
 };

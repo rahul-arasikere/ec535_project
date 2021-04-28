@@ -47,13 +47,14 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+// Code Gotten From QT Arrowpad Demo
 
 #include <QtWidgets>
 
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
+// Modified to represent the classes example more closely
+int main(int argc, char *argv[]){
     QApplication app(argc, argv);
 
     MainWindow mainWindow;

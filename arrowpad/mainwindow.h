@@ -47,13 +47,14 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+// Code Gotten From QT Arrowpad Demo
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QUdpSocket>
-#include <QFile>
+//#include <QFile>
 
 
 QT_BEGIN_NAMESPACE
@@ -75,6 +76,7 @@ private:
     QMenu *fileMenu;
     QAction *exitAct;
 
+/* Added To Be Able To Do Stuff When Signals Arrive */
 private slots:
     void moveForward();
     void moveBack();

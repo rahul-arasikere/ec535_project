@@ -1,25 +1,19 @@
 #include <linux/init.h>
 #include <linux/module.h>
-#include <linux/kernel.h>   /* printk() */
-#include <linux/kdev_t.h>   /* initialization */
-#include <linux/cdev.h>     /* initialization */
-#include <linux/fs.h>       /* everything... */
-#include <linux/timer.h>    /* timer code */
-#include <linux/jiffies.h>  /* kernel unit of time */
+#include <linux/kernel.h>       /* printk() */
+#include <linux/kdev_t.h>       /* initialization */
+#include <linux/cdev.h>         /* initialization */
+#include <linux/fs.h>           /* everything... */
 #include <linux/device.h>
-#include <linux/slab.h>     /* kmalloc() */
+#include <linux/slab.h>         /* kmalloc() */
 #include <linux/param.h>
-#include <linux/errno.h>    /* error codes */
-#include <linux/types.h>    /* size_t */
-#include <linux/proc_fs.h>
-#include <linux/seq_file.h>
-#include <linux/fcntl.h>    /* O_ACCMODE */
-#include <linux/gpio.h>     /* Legacy GPIO control */
-#include <linux/interrupt.h>
+#include <linux/errno.h>        /* error codes */
+#include <linux/types.h>        /* size_t */
+#include <linux/fcntl.h>        /* O_ACCMODE */
 #include <linux/uaccess.h>
-#include <linux/pwm.h>
-#include <asm/uaccess.h>    /* copy_from/to_user */
-#include <asm/system_misc.h> /* cli(), *_flags */
+#include <linux/pwm.h>          /* pwm api */
+#include <asm/uaccess.h>        /* copy_from/to_user */
+#include <asm/system_misc.h>    /* cli(), *_flags */
 
 #define ROBOT_MAJOR   61
 #define ROBOT_MINOR   0
@@ -58,6 +52,7 @@ struct pwm_device *pwm_right = NULL;
 module_init(robot_init);
 module_exit(robot_exit);
 
+/* Sets The PWM Signals to a 20ms Period With provide Duty_Cycles in ns */
 void set(int left_duty, int right_duty){
     pwm_config(pwm_left, left_duty, 20000000);
     pwm_config(pwm_right, right_duty, 20000000);
@@ -68,33 +63,37 @@ void set(int left_duty, int right_duty){
 static int robot_init(void){
     int err;
 
-    err = register_chrdev_region(dev, 1, "robot"); /* Request register region */
+    err = register_chrdev_region(dev, 1, "robot"); // Request register region
 
     if(err < 0){
         printk(KERN_ALERT "robot: cannot obtain major number %d\n", ROBOT_MAJOR);
         return err;
     }
 
-    cdev_init(&robot_cdev, &robot_fops); /* Assign file operations to the new device */
+    cdev_init(&robot_cdev, &robot_fops); // Assign file operations to the new device
 
-    if((cdev_add(&robot_cdev, dev, 1))){ /* Try to add the device */
+    if((cdev_add(&robot_cdev, dev, 1))){ // Try to add the device
         printk(KERN_ALERT "Cannot add the device to the system\n");
         goto r_class;
     }
 
-    if((dev_class = class_create(THIS_MODULE, "robot_class")) == NULL){ /* Try to create the class */
+    /* Try to create the class */
+    if((dev_class = class_create(THIS_MODULE, "robot_class")) == NULL){
         printk(KERN_ALERT "Cannot create the struct class\n");
         goto r_class;
     }
 
-    if(device_create(dev_class, NULL, dev, NULL, "robot_device") == NULL){ /* Try to create the device */
+    /* Try to create the device */
+    if(device_create(dev_class, NULL, dev, NULL, "robot_device") == NULL){
         printk(KERN_ALERT "Cannot create the device\n");
         goto r_device;
     }
-
+    
+    /* Retrieving PWM Devices */
     pwm_left = pwm_request(1, "left-side");
     pwm_right = pwm_request(2, "right-side");
 
+    /* Error Handling */
     if(pwm_left == NULL){
         printk(KERN_ALERT "robot: PWM Left wasn't retrieved");
         goto r_device;
@@ -129,18 +128,20 @@ static ssize_t robot_read(struct file *filp, char *buf, size_t count, loff_t *f_
 }
 
 static ssize_t robot_write(struct file *filp, const char *buf, size_t count, loff_t *f_pos){
-    char *buffer = kmalloc(count, GFP_KERNEL);
-    char flag = 's';
+    char *buffer = kmalloc(count, GFP_KERNEL); // Setup input buffer with length count
+    char flag = 's';                           // Set the flag to default to stopped position
 
+    /* Copy Informattion From User Space */
     if(copy_from_user(buffer + *f_pos, buf, count)){
         return -EFAULT;
     }
     
     if(buffer){
-        flag = buffer[0];
-        kfree(buffer);    
+        flag = buffer[0]; // Set flag to the value of the first character in the buffer
+        kfree(buffer);    // Free the memory space taken by the buffer
     }
 
+    /* Flag Validation and Executation */
     if(flag == 'f' || flag == 'F'){
         set(1000000, 1000000);
     }else if(flag == 'b' || flag == 'B'){
@@ -159,6 +160,7 @@ static ssize_t robot_write(struct file *filp, const char *buf, size_t count, lof
     return count;
 }
 
+/* Disabling and Removing Everything For a Succesfully Removal */
 static void robot_exit(void){
     pwm_disable(pwm_left);
     pwm_disable(pwm_right);
