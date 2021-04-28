@@ -7,7 +7,7 @@ The final project submission for BU ENG EC535 by Asbel and Rahul.
 - 2 BeagleBone Blacks
 - TouchScreen and Cape for BeagleBone
 - Ethernet Cables along with Router or Managed Switch
-- 6 Wheeled Robot Drive Train controlled by PWM.
+- 2 Channel PWM Controlled Robot Drivetrain
 
 ## Instructions for compiling software
 
