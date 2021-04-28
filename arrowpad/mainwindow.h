@@ -53,6 +53,7 @@
 
 #include <QMainWindow>
 #include <QUdpSocket>
+#include <QFile>
 
 
 QT_BEGIN_NAMESPACE

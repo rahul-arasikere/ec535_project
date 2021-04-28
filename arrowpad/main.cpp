@@ -54,8 +54,6 @@
 
 int main(int argc, char *argv[])
 {
-    // Q_INIT_RESOURCE(arrowpad);
-
     QApplication app(argc, argv);
 
     MainWindow mainWindow;

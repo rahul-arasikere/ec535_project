@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.2, 2021-04-25T13:10:57. -->
+<!-- Written by QtCreator 4.14.2, 2021-04-25T13:34:46. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -294,9 +294,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">arrowpad2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/BU/AJ/Junior/Spring/EC 535/Lab/Lab5/Github/arrowpad.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/BU/AJ/Junior/Spring/EC 535/Lab/Lab5/Github/arrowpad.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/BU/AJ/Junior/Spring/EC 535/Lab/Lab5/Github/arrowpad/arrowpad.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/BU/AJ/Junior/Spring/EC 535/Lab/Lab5/Github/arrowpad/arrowpad.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
