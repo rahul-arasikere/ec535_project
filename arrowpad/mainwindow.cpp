@@ -59,7 +59,7 @@ MainWindow::MainWindow()
 {
     arrowPad = new ArrowPad;
     socket = new QUdpSocket(this);
-    socket->connectToHost(QHostAddress("127.0.0.1"), 14123); // fix this
+    socket->connectToHost(QHostAddress("192.168.1.36"), 14123); // fix this
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     setCentralWidget(arrowPad);
 
@@ -79,68 +79,68 @@ MainWindow::MainWindow()
 
 void MainWindow::moveForward()
 {
-    QFile robot("/dev/robot");
-    if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+    // QFile robot("/dev/robot");
+    // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
+    //     return;
 
-    QTextStream out(&robot);
-    out << "F";
+    // QTextStream out(&robot);
+    // out << "F";
 
-    robot.close();
+    // robot.close();
 
-    //socket->write("F");
+    socket->write("F");
 }
 void MainWindow::moveBack()
 {
-    QFile robot("/dev/robot");
-    if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+    // QFile robot("/dev/robot");
+    // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
+    //     return;
 
-    QTextStream out(&robot);
-    out << "B";
+    // QTextStream out(&robot);
+    // out << "B";
 
-    robot.close();
+    // robot.close();
 
-    //socket->write("B");
+    socket->write("B");
 }
 void MainWindow::moveLeft()
 {
-    QFile robot("/dev/robot");
-    if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+    // QFile robot("/dev/robot");
+    // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
+    //     return;
 
-    QTextStream out(&robot);
-    out << "L";
+    // QTextStream out(&robot);
+    // out << "L";
 
-    robot.close();
+    // robot.close();
 
-    //socket->write("L");
+    socket->write("L");
 }
 void MainWindow::moveRight()
 {
-    QFile robot("/dev/robot");
-    if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+    // QFile robot("/dev/robot");
+    // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
+    //     return;
 
-    QTextStream out(&robot);
-    out << "R";
+    // QTextStream out(&robot);
+    // out << "R";
 
-    robot.close();
+    // robot.close();
 
-    //socket->write("R");
+    socket->write("R");
 }
 void MainWindow::moveStop()
 {
-    QFile robot("/dev/robot");
-    if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+    // QFile robot("/dev/robot");
+    // if(!robot.open(QIODevice::WriteOnly | QIODevice::Text))
+    //     return;
 
-    QTextStream out(&robot);
-    out << "S";
+    // QTextStream out(&robot);
+    // out << "S";
 
-    robot.close();
+    // robot.close();
 
-    //socket->write("S");
+    socket->write("S");
 }
 
 void MainWindow::readyRead()

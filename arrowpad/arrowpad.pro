@@ -15,7 +15,6 @@ INSTALLS += target
 QT += widgets
 QT += core
 QT += network
-QT += opengl
 
 CONFIG   += console
 CONFIG   -= app_bundle
