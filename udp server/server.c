@@ -18,7 +18,6 @@ int main()
     int sockfd;
     int pFile = open("/dev/robot", O_RDWR);
     char buffer[MAXLINE];
-    char *hello = "Hello from server";
     struct sockaddr_in servaddr, cliaddr;
 
     // Creating socket file descriptor
